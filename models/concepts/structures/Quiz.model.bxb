@@ -1,0 +1,94 @@
+structure (Quiz) {
+  description (A whole Quiz structure)
+  property (title) {
+    type (core.Text)
+    min (Required) max (One)
+    visibility (Private)
+  }
+  property (tags) {
+    description (Labels attached to this quiz to enable searching for the quiz by keyword)
+    type (core.Text)
+    min (Optional) max (Many)
+    visibility (Private)
+  }
+  property (questions) {
+    description (Questions in this quiz)
+    type (Question)
+    min (Required) max (Many)
+    visibility (Private)
+  }
+  property (state) {
+    description (State of boxing match - BLOCK/ATTACk/END)
+    type (core.Text)
+    min (Optional) max (One)
+    visibility (Private)
+  }
+  property (level) {
+    description (Level of player)
+    type (core.Text)
+    min (Required) max (One)
+    visibility (Private)
+  }
+  property (opponentName) {
+    description (name of opponent)
+    type (core.Text)
+    min (Optional) max (One)
+    visibility (Private)
+  }
+  property (image) {
+    description (Image describing this quiz)
+    type (image.Image)
+    min (Optional) max (One)
+    visibility (Private)
+  }
+  property (textToSpeak) {
+    description(Question formatted for speech channel)
+    type (core.Text)
+    min (Optional) max (One)
+    visibility (Private)
+  }
+  property (index) {
+    description (Index of the current question)
+    type (core.Integer)
+    min (Required) max (One)
+  }
+  property (score) {
+    description (User's score)
+    type (core.Integer)
+    min (Required) max (One)
+    visibility (Private)
+  }
+  property (playerPoints) {
+    description (User's score)
+    type (core.Integer)
+    min (Required) max (One)
+    visibility (Private)
+  }
+  property (computerPoints) {
+    description (User's score)
+    type (core.Integer)
+    min (Required) max (One)
+    visibility (Private)
+  }
+  property (completed) {
+    description (Toggles true when the quiz is completed)
+    type (core.Boolean)
+    min (Required) max (One)
+    visibility (Private)
+  }
+  property (yesNo) {
+    description (Toggles true when the quiz is completed)
+    type (core.Boolean)
+    min (Optional) max (One)
+    visibility (Private)
+  }
+  property (newGame) {
+    description (Toggles true when the quiz is completed)
+    type (core.Boolean)
+    min (Optional) max (One)
+    visibility (Private)
+  }
+  features{
+    transient
+  }
+}

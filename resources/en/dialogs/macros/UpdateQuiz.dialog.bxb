@@ -1,0 +1,85 @@
+// Localized strings used by UpdateQuiz view
+
+template-macro-def (FIRST_QUESTION) {
+  params {
+    param (quiz) {
+      type (Quiz)
+      min (Required)
+      max (One)
+    }
+  }
+  content {
+    // FIRST_QUESTION...
+    template ("#{value(quiz.questions[quiz.index].text)}") {
+      speech ("#{value(quiz.questions[quiz.index].text)}...")
+    }
+  }
+}
+
+template-macro-def (CORRECT_QUESTION_ANSWER) {
+  params {
+    param (quiz) {
+      type (Quiz)
+      min (Required)
+      max (One)
+    }
+  }
+  content {
+    template ("CORRECT_QUESTION_ANSWER. #{value(quiz.questions[quiz.index].text)}") {
+      speech ("CORRECT_QUESTION_ANSWER... #{value(quiz.questions[quiz.index].text)}... [#{value(quiz.textToSpeak)}]")
+    }
+  }
+}
+
+template-macro-def (INCORRECT_QUESTION_ANSWER) {
+  params {
+    param (quiz) {
+      type (Quiz)
+      min (Required)
+      max (One)
+    }
+  }
+  content {
+    template ("INCORRECT_QUESTION_ANSWER. The correct answer is #{value(quiz.questions[quiz.index-1].correctAnswer.text)}. #{value(quiz.questions[quiz.index].text)}") {
+      speech ("INCORRECT_QUESTION_ANSWER... The correct answer is #{value(quiz.questions[quiz.index-1].correctAnswer.text)}... #{value(quiz.questions[quiz.index].text)}...  [#{value(quiz.textToSpeak)}]")
+    }
+  }
+}
+
+template-macro-def (COMPLETED_LAST_CORRECT) {
+  params {
+    param (quiz) {
+      type (Quiz)
+      min (Required)
+      max (One)
+    }
+  }
+  content {
+    template ("COMPLETED_LAST_CORRECT. You got #{value(quiz.questions[quiz.index].text)} ") {
+      speech ("COMPLETED_LAST_CORRECT... You got #{value(quiz.questions[quiz.index].text)} !")
+    }
+  }
+}
+
+template-macro-def (COMPLETED_LAST_INCORRECT) {
+  params {
+    param (quiz) {
+      type (Quiz)
+      min (Required)
+      max (One)
+    }
+  }
+  content {
+    // COMPLETED_LAST_INCORRECT
+    template ("#{value(quiz.questions[quiz.index].text)}... ") {
+      speech ("#{value(quiz.questions[quiz.index].text)}... ")
+    }
+  }
+}
+
+
+
+
+
+
+

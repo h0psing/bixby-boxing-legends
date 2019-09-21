@@ -1,0 +1,14 @@
+vocab(Answer) {
+  "a",
+  "b",
+  "c",
+  "yes",
+  "block left",
+  "block right",
+  "block left right",
+  "block left right left",
+  "block left right right",
+  "block left right",
+  "block right left",
+  "block right right"
+}

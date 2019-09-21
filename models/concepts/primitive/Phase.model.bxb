@@ -1,0 +1,6 @@
+enum (Phase) {
+  description (__DESCRIPTION__)
+  symbol (ATTACK)
+  symbol (BLOCK)
+  symbol (NEW)
+}

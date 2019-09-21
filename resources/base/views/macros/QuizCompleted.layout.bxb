@@ -1,0 +1,23 @@
+// See the LayoutMacros.dialog for localized strings
+
+layout-macro-def (QuizCompleted){
+  params {
+    param (quiz) {
+      type (Quiz)
+      min (Optional)
+      max (Many)
+    }
+  }
+  content{
+    section{
+      content{
+        image {
+            aspect-ratio (4:3)
+            background-color (Transparent)
+            object-position (Center)
+            url ("images/knockout.jpg")
+        }
+      }
+    }
+  }
+}

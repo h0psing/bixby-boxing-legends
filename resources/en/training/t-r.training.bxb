@@ -1,0 +1,10 @@
+train (t-r3icl2t4r8bxhcrhfesszye75) {
+  utterance ([g:StartFight] start)
+  plan (Y2BmkEqtSMwtyEnVS8qvyMxLz0lNT81LKdYLLM2sYlDALhdcklhU4paZnlGCVzcTAyMQMwBJRgYGGA0A)
+  last-modified (1568973354175)
+}
+train (t-rhqrvtq43qwp4v4gmvqt6avk6) {
+  utterance ("[g:Answer:prompt] (foo bar foo bar)[v:Answer]")
+  plan (Y2BiUCzISaxML8ovzUvRK87MLcjJTMtMTYkvLM2s0nPMKy5PLSJGCSMQMjDwADETEAPZAA==)
+  last-modified (1562185770436)
+}

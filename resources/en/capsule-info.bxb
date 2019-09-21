@@ -1,0 +1,11 @@
+capsule-info {
+  display-name (Boxing Legends)
+  developer-name (Five Fifteen)
+  icon-asset (icons/correct.png)
+  description ("An example capsule that demonstrates how to build a quiz")
+  website-url (https://fivefifteen.com.au/)
+  search-keywords{
+    keyword (quiz)
+  }
+  dispatch-name (Boxing Legends)
+}

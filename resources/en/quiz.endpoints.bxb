@@ -1,0 +1,28 @@
+endpoints {
+  action-endpoints {
+    action-endpoint (FindOpponent) {
+      accepted-inputs (searchTerm, $vivContext)
+      local-endpoint (FindOpponent.js)
+    }
+    action-endpoint (StartFight) {
+      accepted-inputs (quiz)
+      local-endpoint (StartFight.js)
+    }
+    action-endpoint (NewGame) {
+      accepted-inputs (quiz, $vivContext)
+      local-endpoint (NewGame.js)
+    }
+    action-endpoint (CompletedFight) {
+      accepted-inputs (quiz, answer, $vivContext)
+      local-endpoint (CompletedFight.js)
+    }
+    action-endpoint (UpdateFight) {
+      accepted-inputs (quiz, answer, $vivContext)
+      local-endpoint (UpdateFight.js)
+    }
+    action-endpoint (ExtractAnswerFromOption) {
+      accepted-inputs (option)
+      local-endpoint (ExtractAnswerFromOption.js)
+    }
+  }
+}

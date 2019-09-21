@@ -1,0 +1,15 @@
+action (SayYes) {
+  description (Keep prompting the user for answers until quiz is completed.)
+  type (Calculation)
+  collect {
+    input (quiz) {
+      type (Quiz)
+      min (Required) max (One)
+    }
+    input (answer) {
+      type (Answer)
+      min (Required) max (One)
+    }
+  }
+  output (Quiz)
+}

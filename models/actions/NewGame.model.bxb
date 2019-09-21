@@ -1,0 +1,11 @@
+action (NewGame) {
+  description (Keep prompting the user for answers until quiz is completed.)
+  type (Calculation)
+  collect {
+    input (quiz) {
+      type (Quiz)
+      min (Required) max (One)
+    }
+  }
+  output (Quiz)
+}

@@ -1,0 +1,26 @@
+action (StartFight) {
+  description (Keep prompting the user for answers until quiz is completed.)
+  type (Calculation)
+  collect {
+    input (quiz) {
+      type (Quiz)
+      min (Required) max (One)
+      default-init {
+        intent {
+          goal: FindOpponent
+        }
+      }
+      validate {
+        if (!quiz.completed) {
+          replan {
+            intent {
+              goal: UpdateFight
+              value { $expr(quiz) }
+            }
+          }
+        }
+      }
+    }
+  }
+  output (Quiz)
+}
