@@ -1,5 +1,5 @@
 dialog (NoResult) {
-  match: Quiz {
+  match: Match {
     from-output: FindOpponent(action)
   }
   template("I didn't find an opponent [ matching #{value(action.searchTerm)}].")

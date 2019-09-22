@@ -1,9 +1,29 @@
+// Templates for Boxing Legends
+
+
+template-macro-def (FIGHT_COMPLETE) {
+  params {
+    param (quiz) {
+      type (Match)
+      min (Required)
+      max (One)
+    }
+  }
+  content {
+    template ("CORRECT_QUESTION_ANSWER. #{value(quiz.questions[quiz.index].text)}") {
+      speech ("CORRECT_QUESTION_ANSWER... #{value(quiz.questions[quiz.index].text)}... [#{value(quiz.textToSpeak)}]")
+    }
+  }
+}
+
+
+
 // Localized strings used by UpdateQuiz view
 
 template-macro-def (FIRST_QUESTION) {
   params {
     param (quiz) {
-      type (Quiz)
+      type (Match)
       min (Required)
       max (One)
     }
@@ -19,7 +39,7 @@ template-macro-def (FIRST_QUESTION) {
 template-macro-def (CORRECT_QUESTION_ANSWER) {
   params {
     param (quiz) {
-      type (Quiz)
+      type (Match)
       min (Required)
       max (One)
     }
@@ -34,7 +54,7 @@ template-macro-def (CORRECT_QUESTION_ANSWER) {
 template-macro-def (INCORRECT_QUESTION_ANSWER) {
   params {
     param (quiz) {
-      type (Quiz)
+      type (Match)
       min (Required)
       max (One)
     }
@@ -49,7 +69,7 @@ template-macro-def (INCORRECT_QUESTION_ANSWER) {
 template-macro-def (COMPLETED_LAST_CORRECT) {
   params {
     param (quiz) {
-      type (Quiz)
+      type (Match)
       min (Required)
       max (One)
     }
@@ -64,7 +84,7 @@ template-macro-def (COMPLETED_LAST_CORRECT) {
 template-macro-def (COMPLETED_LAST_INCORRECT) {
   params {
     param (quiz) {
-      type (Quiz)
+      type (Match)
       min (Required)
       max (One)
     }

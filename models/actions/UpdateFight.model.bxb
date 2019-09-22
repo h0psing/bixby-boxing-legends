@@ -7,9 +7,9 @@ action (UpdateFight) {
       min (Required) max (One)
     }
     input (quiz) {
-      type (Quiz)
+      type (Match)
       min (Required) max (One)
     }
   }
-  output (Quiz)
+  output (Match)
 }

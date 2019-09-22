@@ -3,9 +3,9 @@ action (NewGame) {
   type (Calculation)
   collect {
     input (quiz) {
-      type (Quiz)
+      type (Match)
       min (Required) max (One)
     }
   }
-  output (Quiz)
+  output (Match)
 }

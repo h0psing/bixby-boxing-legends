@@ -3,7 +3,7 @@ action (SayYes) {
   type (Calculation)
   collect {
     input (quiz) {
-      type (Quiz)
+      type (Match)
       min (Required) max (One)
     }
     input (answer) {
@@ -11,5 +11,5 @@ action (SayYes) {
       min (Required) max (One)
     }
   }
-  output (Quiz)
+  output (Match)
 }

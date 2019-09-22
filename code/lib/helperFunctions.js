@@ -62,62 +62,47 @@ module.exports = {
 			var output = "";
 			var welcome = "welcome back, you're playing at  " + level + " level ,,";
 
-			//console.log("[debug: randomAttackGenerator]");
+			console.log("log: *** function: randomAttackGenerator ***");
 			
-			if (level.toLowerCase() == "beginner") {
-				
+			if (level.toLowerCase() == "beginner") {				
 				min = 1;
 				max = 2;
 				var moveCount = randomIntFromInterval(min,max); 
 				//console.log("[debug: randomAttackGenerator] beginner");
 				//console.log("[debug: randomAttackGenerator] moveCount: " + moveCount);
 				output = getRandomMoves(attackMovesArray, moveCount);
-				//console.log("[debug: randomAttackGenerator] output: " + output);
-				
+				//console.log("[debug: randomAttackGenerator] output: " + output);				
 			} else if (level.toLowerCase() == "amateur") {
-				//console.log("[debug: randomAttackGenerator] beginner");
-				
+				//console.log("[debug: randomAttackGenerator] beginner");				
 				min = 1;
 				max = 3;
 				var moveCount = randomIntFromInterval(min,max); 
 				//console.log("[debug: randomAttackGenerator] moveCount: " + moveCount);
-				output = getRandomMoves(attackMovesArray, moveCount);
-				
+				output = getRandomMoves(attackMovesArray, moveCount);			
 			} else if (level.toLowerCase() == "pro") {
-				//console.log("[debug: randomAttackGenerator] beginner");
-				
+				//console.log("[debug: randomAttackGenerator] beginner");	
 				min = 2;
-				max = 4;
-				
+				max = 4;	
 				var moveCount = randomIntFromInterval(min,max); 
 				//console.log("[debug: randomAttackGenerator] moveCount: " + moveCount);
 				output = getRandomMoves(attackMovesArray, moveCount);
-				
 			} else if (level.toLowerCase() == "contender") {
-				//console.log("[debug: randomAttackGenerator] beginner");
-				
+				//console.log("[debug: randomAttackGenerator] beginner");	
 				min = 3;
-				max = 4;
-				
+				max = 4;	
 				var moveCount = randomIntFromInterval(min,max); 
 				//console.log("[debug: randomAttackGenerator] moveCount: " + moveCount);
-				output = getRandomMoves(attackMovesArray, moveCount);
-				
+				output = getRandomMoves(attackMovesArray, moveCount);				
 			} else if (level.toLowerCase() == "champ") {
-				console.log("[debug: randomAttackGenerator] beginner");
-			
+				//console.log("[debug: randomAttackGenerator] beginner");	
 				min = 3;
-				max = 5;
-				
+				max = 5;				
 				var moveCount = randomIntFromInterval(min,max); 
 				//console.log("[debug: randomAttackGenerator] moveCount: " + moveCount);
-				
-				output = getRandomMoves(attackMovesArray, moveCount);
-			
+				output = getRandomMoves(attackMovesArray, moveCount);			
 			}
 		
-			return output;
-	
+			return output;	
 	},
 	// Takes an array and converts it to a string separated by a space
 	arrayToString (array) {
@@ -174,7 +159,7 @@ module.exports = {
 		return speechOutput;
 	},
 	getNewGameMessage(attack) {
-		var  speechOutput = "Great to see you back inthe ring..";
+		var  speechOutput = "Great to see you back in the ring...";
   speechOutput = speechOutput + "He attacks..." +  attack + "... Block now...";
 	console.log("log: getWelcomeMessage function: ", speechOutput);
 		return speechOutput;
@@ -252,20 +237,18 @@ var randomIntFromInterval = function (min, max)
 
 var getRandomMoves = function (attackMovesArray, moveCount) // min and max included
 {
-	//console.log("[debug: getRandomMoves]");
+	console.log("log: *** function: getRandomMoves ***");
 	var output = "";
-	console.log(moveCount);
+	//console.log(moveCount);
 	//console.log("[debug: getRandomMoves] attackMovesArray " + attackMovesArray);
-	console.log(randomIntFromInterval(0,attackMovesArray.length));
+	//console.log(randomIntFromInterval(0,attackMovesArray.length));
 	for (i=0; i<moveCount; i++) {
 		if (i==0) {
-			output = attackMovesArray[randomIntFromInterval(0,attackMovesArray.length-1)];	
+			output = attackMovesArray[randomIntFromInterval(0,attackMovesArray.length-1)];
 		} else {
 			output = output + "," + attackMovesArray[randomIntFromInterval(0,attackMovesArray.length-1)];	
 		}				
 	}
-	
-	console.log(output);
-	
+	//console.log(output);	
 	return output;
 }

@@ -3,7 +3,7 @@
 layout-macro-def (QuizCompleted){
   params {
     param (quiz) {
-      type (Quiz)
+      type (Match)
       min (Optional)
       max (Many)
     }

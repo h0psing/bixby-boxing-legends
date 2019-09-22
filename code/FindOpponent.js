@@ -3,90 +3,38 @@ const { buildOpponent } = require("./lib/util.js");
 const helperFunctions = require("./lib/helperFunctions");
 const commentaryFunctions = require("./lib/commentaryFunctions");
 var remoteDB = require('./lib/remoteDB.js');
+var dBOperations = require('./lib/dBOperations.js');
 
 exports.function = function(searchTerm, $vivContext) {
 
   const bixbyUserId = $vivContext.userId;
   var userExists = false;
-  console.log("log: bixbyUserId: ", bixbyUserId);
-  let $id;
-  let level;
-  let userPoints;
-  let computerPoints;
-  let opponentName;
-
-//let opponent; 
-  console.log("log: handleWelcome");
-  //var remoteParameters = remoteDB.getUserData(bixbyUserId)
-  //console.log("log: handleWelcome: remoteParameters: ", remoteParameters);
-  
-  /*
-  if (remoteParameters != undefined) {
-    userExists = true;
-    console.log("log: remoteParameters: !undefined");
-    //$id = remoteParameters["dbUserId"];
-    //var remoteOpponent = remoteDB.getUserData(bixbyUserId);
-    //$id = remoteOpponent["dbUserId"];
-    //remoteOpponent["dbUserId"] = $id;
-    console.log("log: $id: ", $id);
-    //remoteOpponent[0].level = "AMATEUR";
-    //console.log("log: remoteOpponent: ", remoteOpponent);
-    //console.log("log: remoteOpponent[0]: ", remoteOpponent[0]);
-    //console.log("log: remoteOpponent: ", remoteOpponent["dbUserId"]);
-    //remoteDB.putUserData(bixbyUserId, opponent);
-  } else {
-      //opponent = buildOpponent("new");
-      //remoteDB.putUserData(bixbyUserId, opponent);
-      //var remoteParametersFirstTime = remoteDB.getUserData(bixbyUserId);
-      //$id = remoteParametersFirstTime["dbUserId"];
-      //console.log("log: remoteParameters: undefined");
-      //console.log("log: remoteParametersFirstTime: ", remoteParametersFirstTime);
-  }
-
-  */
-
-  console.log("start");
-  var opponent = buildOpponent("new");
-  console.log("aaa");
-  console.log("opponent: ", opponent);
-  var computerAttack = helperFunctions.randomAttackGenerator(opponent[0].level);
-  //opponent[0].textToSpeak  
-
-  // setting welcome message
   let speechOutput;
+  let putData;
 
+  var remoteParameters = remoteDB.getUserData(bixbyUserId);
+ 
+  // fetch a new opponent for a new game or game restart
+  var opponent = buildOpponent("new");
+  //console.log("log: opponent", opponent);
 
+  var computerAttack = helperFunctions.randomAttackGenerator(opponent[0].level);
+  console.log("computerAttack: ", computerAttack);
 
-  /*if (quiz != undefined) {
-    console.log("log: quiz !undefined");
-    console.log("log: quiz: ", quiz);
-    if (quiz.state == "NEW") {
+  if (remoteParameters != undefined) {
+    opponent = remoteParameters;
+    console.log("log: !undefined");
     speechOutput = helperFunctions.getNewGameMessage(computerAttack);
-    } else {
-      speechOutput = helperFunctions.getWelcomeMessage(computerAttack);
-    }
-
-  } else {
-     console.log("log: quiz undefined");*/
+  } else { 
+    putData = remoteDB.putUserData(bixbyUserId, opponent);
+    console.log("log: undefined");
     speechOutput = helperFunctions.getWelcomeMessage(computerAttack);
-    
-  //}
-
-
-
-
-
-
-
-
-
-
+  }
 
   console.log("log: speechOutput: ", speechOutput);
   console.log("log: opponent[0]: ", opponent[0]);
   // setting opponent object to pass through the fight loop
   opponent[0].questions[0].text = speechOutput;
-  console.log("opponent[0]: ", opponent[0]);
   opponent[0].title = computerAttack;
   opponent[0].state = "BLOCK";
   opponent[0].computerPoints = 30;
@@ -94,7 +42,6 @@ exports.function = function(searchTerm, $vivContext) {
 
   var attackArray = computerAttack.split(',');
   console.log("log: attackArray: ", attackArray);
-  
   console.log("log: options: ", opponent[0].questions[0].options);
   var blockAnswer = "block ";
   for (i=0; i < attackArray.length; i++) {
@@ -104,16 +51,13 @@ exports.function = function(searchTerm, $vivContext) {
       if (array[k] == "left" || array[k] == "right") {
         blockAnswer = blockAnswer + " " + array[k] + " ";
       }
-    }
-    
+    }  
   }
 
-  console.log("log: opponent: ", opponent[0]);
-
+  // setting blocks
   opponent[0].questions[0].options[0].text = "block left right left";
   opponent[0].questions[0].options[1].text = blockAnswer;
-  opponent[0].questions[0].options[2].text = "block left right";
+  opponent[0].questions[0].options[2].text = "block right left right";
 
-  
   return opponent;
 };

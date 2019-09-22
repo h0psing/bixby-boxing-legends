@@ -101,9 +101,8 @@ function buildAcceptedAnswers(answer, options) {
 
 function buildOpponent(searchTerm){
   var opponent = [];
-  console.log("log: buildOpponent function");
+  console.log("log: *** function: buildOpponent ***");
 
-  
   var quizzes = require("../data/fights");
 
   if (searchTerm) {
@@ -115,97 +114,30 @@ function buildOpponent(searchTerm){
   
   var attack = helperFunctions.randomAttackGenerator("PRO");
   var opponentList = commentaryFunctions.fighterArray;
-  console.log("log: opponents: ", opponentList);
-  var opponentName = "bone crusher";
-
+  //console.log("log: opponents: ", opponentList);
   
+  var quiz = quizzes[0];
+  quiz.completed = false;
+  quiz.score = 30;
+  quiz.computerPoints = 20;
+  quiz.playerPoints = 20;
+  quiz.level = "BEGINNER";
+  quiz.index = 0;
+  //quiz.dbUserId = "NA";
+  var questions = buildQuestionsFromJson(quiz);
+  quiz.textToSpeak = buildQuestionToSpeak(questions[0]);
+  //cannot start a quiz without any questions
+  if (!questions || !questions.length) {
+    //console.log("Chosen match has no questions!");
+  } else {
+    quiz.questions = questions;
+    opponent.push(quiz)
+  }
 
-  //var attack = helperFunctions.randomAttackGenerator("PRO");
-  
-  var computerPlayer = {
-    title: "Contender",
-    tags: ["contender", "animal"], //used to find this quiz
-    score: 30,
-    playerPoints: 20,
-    computerPoints: 20,
-    index: 0,
-    level: "PRO",
-    completed: false,
-    image: {
-      url: "/images/Animals.jpeg",
-    },
-    questions: [
-      {
-        question: attack,
-        options: ["right jab left hook", "left cross", "right hook left uppercut"],
-        answer: 0,
-        explanation: "Because it's cold. Get it?",
-        text: "test here",
-        correctAnswer: "correct",
-      },
-    ],
-  };
-
-  console.log("log: computerPlayer: ", computerPlayer);
-  console.log("log: opponent: ", opponent);
-  
-  //opponent.push(computerPlayer);
-
-
-    var quiz = quizzes[0];
-    quiz.completed = false;
-    quiz.score = 30;
-    quiz.computerPoints = 20;
-    quiz.playerPoints = 20;
-    quiz.level = "BEGINNER";
-    quiz.index = 0;
-    var questions = buildQuestionsFromJson(quiz);
-    quiz.textToSpeak = buildQuestionToSpeak(questions[0]);
-    //cannot start a quiz without any questions
-    if (!questions || !questions.length) {
-      console.log("Chosen quiz has no questions!");
-    } else {
-      quiz.questions = questions;
-      opponent.push(quiz)
-    }
-
-
-  
   return opponent;
-  
-
-}
-
-function buildQuizzes_X(searchTerm){
-  var quizzes = require("../data/quizzes");
-  if (searchTerm) {
-    const foundQuiz = findItems(quizzes, searchTerm)
-    if(foundQuiz.length > 0){
-      quizzes = foundQuiz;
-    }
-  }
-  var formattedQuizzes = [];
-  //read the questions in the quiz and initialize the state
-  for (var i=0; i<quizzes.length; i++) {
-    var quiz = quizzes[i];
-    quiz.completed = false;
-    quiz.score = 0;
-    quiz.index = 0;
-    var questions = buildQuestionsFromJson(quiz);
-    quiz.textToSpeak = buildQuestionToSpeak(questions[0]);
-    //cannot start a quiz without any questions
-    if (!questions || !questions.length) {
-      console.log("Chosen quiz has no questions!");
-    } else {
-      quiz.questions = questions;
-      formattedQuizzes.push(quiz);
-    }
-  }
-  return formattedQuizzes;
 }
 
 module.exports = {
   buildOpponent:buildOpponent,
-  buildQuizzes_X:buildQuizzes_X,
   buildQuestionToSpeak:buildQuestionToSpeak
 }

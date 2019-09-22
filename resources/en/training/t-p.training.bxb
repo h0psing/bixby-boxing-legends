@@ -1,5 +1,5 @@
 train (t-pz8x5ohru6pbxz2ujn1khw440) {
-  utterance ("[g:Quiz:prompt] (funny)[v:SearchTerm] quiz")
-  plan (Y2BmkC/ISaxML8ovzUvRK87MLcjJTMtMTYkvLM2s0gsEEgzKeBS4ZealgBWp4lEUnJpYlJwRklqUy8DEwAjEDECSkQEEmCAYAA==)
-  last-modified (1562618807493)
+  utterance ("[g:Match:prompt] (funny)[v:SearchTerm] quiz")
+  plan (Y2BmkE/LLEtNy0wrSU3N00vKr8jMS89JTU/NSynW800sSc5gUMOtwC0zL8W/oCA/LzWvhEEFt7rg1MSi5IyQ1KJcBiYGRiBmAJKMDCDABMEA)
+  last-modified (1569125019842)
 }

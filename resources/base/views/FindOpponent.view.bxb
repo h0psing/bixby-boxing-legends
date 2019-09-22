@@ -2,7 +2,7 @@
 
 input-view {
   match {
-    Quiz(quizzes)
+    Match(quizzes)
   }
 
   message {

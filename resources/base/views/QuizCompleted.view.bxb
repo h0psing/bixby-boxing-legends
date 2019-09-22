@@ -1,7 +1,7 @@
 // See the UpdateQuiz.dialog for localized strings
 
 result-view{
-  match: Quiz(quiz){
+  match: Match(quiz){
     from-output:StartFight(action)
   }
   

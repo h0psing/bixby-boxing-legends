@@ -17,7 +17,7 @@
  * 
  * In Bixby, the UserData Structure looks like this:
  * {
- *   dbUserId: <dbUserId> // Convenience key in Bixby to store provider specific ids (see https://bixbydevelopers.com/dev/docs/dev-guide/developers/actions.js-actions#provider-specific-identifiers)
+ *   $id: <dbUserId> // Convenience key in Bixby to store provider specific ids (see https://bixbydevelopers.com/dev/docs/dev-guide/developers/actions.js-actions#provider-specific-identifiers)
  *   $type: <bixbyConceptType> // Bixby automaticaly adds this labeling to all Concepts, but we don't need to save it to the remote DB
  *   <property1>: <bixbyConceptValue1>
  *   <property2>: <bixbyConceptValue2>
@@ -27,7 +27,6 @@
  **/
 var http = require('http')
 var properties = require('./properties.js')
-var console = require("console");
 
 module.exports = {
   deleteUserData: deleteUserData, // DELETE UserData
@@ -37,14 +36,9 @@ module.exports = {
 
 function createUserData(bixbyUserId, userData) {
   const url = properties.get("config", "baseUrl") + properties.get("config", "collection")
-  
   const query = {
     apikey: properties.get("secret", "apiKey")
   }
-  console.log("test 3", properties.get("config", "url"));
-  console.log("test 3", properties.get("secret", "apiKey"));
-  console.log("test 4", properties.get("config", "userIdField"));
-  console.log("test 5", properties.get("config", "userDataField"));
   const body = {}
   body[properties.get("config", "userIdField")] = bixbyUserId
   body[properties.get("config", "userDataField")] = JSON.stringify(userData)
@@ -56,13 +50,13 @@ function createUserData(bixbyUserId, userData) {
   const response = http.postUrl(url, body, options)
   if (response) {
     userData = response[properties.get("config", "userDataField")]
-    userData.dbUserId = response["_id"]
+    userData.$id = response["_id"]
     return userData
   }
 }
 
 function deleteUserData(userData) {
-  const dbUserId = userData.dbUserId
+  const dbUserId = userData.$id
   if (dbUserId) {
     // Exists. Delete
     const url = properties.get("config", "baseUrl") + properties.get("config", "collection") + "/" + dbUserId
@@ -98,9 +92,6 @@ function getUserData(bixbyUserId) {
     cacheTime: 0
   }
   const response = http.getUrl(url, options)
-
-  console.log("log: getUserData: ", url);
-
   if (response && response.length === 1) {
     const userData = response[0][properties.get("config", "userDataField")]
     userData.dbUserId = response[0]["_id"]
@@ -112,21 +103,13 @@ function getUserData(bixbyUserId) {
 }
 
 function putUserData(bixbyUserId, userData) {
-  console.log("log: function: putUserData");
-  console.log("log: bixbyUserId: ", bixbyUserId);
-  console.log("log: userData: ", userData);
-  //console.log("log: dbUserId: ", dbUserId);
   const dbUserId = userData.dbUserId
-  
   delete userData.dbUserId
   delete userData.$type
-
   if (dbUserId) {
-    console.log("log: dbUserId: true: ", dbUserId);
     // Already exists. Update
     return updateUserData(bixbyUserId, dbUserId, userData)
   } else {
-    console.log("log: dbUserId: false: ", dbUserId);
     // New user. Create
     return createUserData(bixbyUserId, userData)
   }
@@ -134,10 +117,6 @@ function putUserData(bixbyUserId, userData) {
 
 function updateUserData(bixbyUserId, dbUserId, userData) {
   const url = properties.get("config", "baseUrl") + properties.get("config", "collection") + "/" + dbUserId
-  console.log("log: function: putUserData");
-  console.log("log: bixbyUserId: ", bixbyUserId);
-  console.log("log: userData: ", userData);
-  console.log("log: url: ", url);
   const query = {
     apikey: properties.get("secret", "apiKey")
   }
@@ -150,10 +129,9 @@ function updateUserData(bixbyUserId, dbUserId, userData) {
     cacheTime: 0
   }
   const response = http.putUrl(url, body, options)
-  
   if (response) {
     userData = response[properties.get("config", "userDataField")]
-    userData.dbUserId = response["dbUserId"]
+    userData.dbUserId = response["_id"]
     return userData
   }
 }

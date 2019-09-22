@@ -1,4 +1,4 @@
-structure (Quiz) {
+structure (Match) {
   description (A whole Quiz structure)
   property (title) {
     type (core.Text)
@@ -85,6 +85,12 @@ structure (Quiz) {
   property (newGame) {
     description (Toggles true when the quiz is completed)
     type (core.Boolean)
+    min (Optional) max (One)
+    visibility (Private)
+  }
+  property (dbUserId) {
+    description (name of opponent)
+    type (core.Text)
     min (Optional) max (One)
     visibility (Private)
   }

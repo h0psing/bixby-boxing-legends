@@ -8,5 +8,5 @@ action (FindOpponent) {
       description (Try to match a specific quiz)
     }
   }
-  output (Quiz)
+  output (Match)
 }

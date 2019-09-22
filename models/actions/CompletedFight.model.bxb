@@ -7,9 +7,9 @@ action (CompletedFight) {
       min (Required) max (One)
     }
     input (quiz) {
-      type (Quiz)
+      type (Match)
       min (Optional) max (One)
     }
   }
-  output (Quiz)
+  output (Match)
 }

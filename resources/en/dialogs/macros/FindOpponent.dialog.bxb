@@ -3,7 +3,7 @@
 template-macro-def (WELCOME_TO_QUIZ) {
    params {
     param (quizzes) {
-      type (Quiz)
+      type (Match)
       min (Required)
       max (One)
     }
@@ -16,7 +16,7 @@ template-macro-def (WELCOME_TO_QUIZ) {
 template-macro-def (QUIZ_SELECTION_QUESTION) {
    params {
     param (quizzes) {
-      type (Quiz)
+      type (Match)
       min (Required)
       max (One)
     }
@@ -32,7 +32,7 @@ template-macro-def (QUIZ_SELECTION_QUESTION) {
 template-macro-def (ITEM-SELECTION-QUESTION) {
   params {
     param (quizzes) {
-      type (Quiz)
+      type (Match)
       min (Required)
       max (One)
     }
@@ -99,7 +99,7 @@ template-macro-def (LAST_QUIZ) {
 template-macro-def (QUIZ_LIST_SUMMARY) {
   params {
     param (quizzes) {
-      type (Quiz)
+      type (Match)
       min (Required) max (Many)
     }
   }

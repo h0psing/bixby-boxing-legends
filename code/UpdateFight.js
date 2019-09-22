@@ -2,7 +2,8 @@ const { buildQuestionToSpeak } = require("./lib/util");
 const helperFunctions = require("./lib/helperFunctions");
 const commentaryFunctions = require("./lib/commentaryFunctions.js")
 var console = require("console");
-var remoteDB = require('./lib/remoteDB.js');
+const remoteDB = require('./lib/remoteDB.js');
+
 
 module.exports.function = function updateFight (quiz, answer, $vivContext) {
 
@@ -39,7 +40,7 @@ module.exports.function = function updateFight (quiz, answer, $vivContext) {
   if(answer.indexOf("no") > -1) {
     console.log("no")
     console.log("log: no: quiz.newGame: ", quiz.newGame);
-    speechOutput = "see you later ";
+    speechOutput = "let's get back into the gym and work... goodbye... ";
     if (quiz.newGame == true) {
         quiz.questions[0].text = speechOutput;
         quiz.newGame = false;
@@ -114,6 +115,8 @@ module.exports.function = function updateFight (quiz, answer, $vivContext) {
     console.log("log: correctBlocks:", correctBlocks );
     console.log("log: landedPunches:", landedPunches );
 
+console.log("log: playerScore:", playerScore );
+
     // setting up responses for different situations
     var encouragementArray = commentaryFunctions.encouragementArray;
     var blockAllCommentaryArray = commentaryFunctions.blockAllCommentaryArray;
@@ -134,6 +137,7 @@ module.exports.function = function updateFight (quiz, answer, $vivContext) {
     var counterAttackMsg = counterAttackArray[helperFunctions.randomIntFromInterval(0,counterAttackArray.length-1)];
 
     if (playerScore > 0) {
+      console.log("log: playerScore > 0: ");
       if (correctBlocks === attackArray.length) {
         // user blocks all the punches
         quiz.completed = false; // ensure the boxing match is not ended as player still has points
@@ -187,14 +191,14 @@ module.exports.function = function updateFight (quiz, answer, $vivContext) {
 			if (level == "BEGINNER") {
 				speechOutput = speechOutput + "this is a tough sport, are you sure you're up for it?";
 			} else if (level == "AMATEUR") {
-				speechOutput = speechOutput + "back to the gym.  more blood, sweat and tears are needed, ";			
+				speechOutput = speechOutput + "back to the gym...  more blood, sweat and tears are needed... ";			
 			} else if (level == "PRO") {
-				speechOutput = speechOutput + "too bad, you could have been somebody, you could have been,, a contender, ";	
+				speechOutput = speechOutput + "too bad... you could have been somebody... you could have been... a contender... ";	
 			} else if (level == "contender") {
 				speechOutput = speechOutput + "you are no longer a contender, it takes blood and guts to get back up, let's see if you're up for it, ";
 				quiz.level = "PRO";			
 			} else if (level == "CHAMP") {
-				speechOutput = speechOutput + "you've lost the heavyweight title, and moved back to contender, it's time to climb the mountain again,";
+				speechOutput = speechOutput + "you've lost the heavyweight title... and moved back to contender... it's time to climb the mountain again...";
 				quiz.level = "CONTENDER";			
 			}
 
@@ -202,6 +206,28 @@ module.exports.function = function updateFight (quiz, answer, $vivContext) {
       quiz.state = "END";
       //quiz.completed = true;
       quiz.newGame = true;
+
+
+  quiz.questions[0].options[0].text = "Yes";
+  quiz.questions[0].options[1].text = "No";
+  quiz.questions[0].options[2].text = "Quit";
+  //delete quiz.questions[0].options[2];
+      
+        var remoteParameters = remoteDB.getUserData(bixbyUserId);
+        console.log("log: remoteParameters: ", remoteParameters);
+        var dbUserId = remoteParameters.dbUserId;
+        console.log("log: dbUserId: ", dbUserId);
+    
+        var opponentDB = [];
+        opponentDB.push(quiz);
+        opponentDB.dbUserId = dbUserId;
+        console.log("log: quiz: zzz: ", opponentDB);
+        console.log("log: opponentDB.dbUserId: ", opponentDB.dbUserId);
+        remoteParameters[0].level = level;
+        var putData = remoteDB.putUserData(bixbyUserId, remoteParameters);
+
+
+      
     }
 
     quiz.textToSpeak = speechOutput;
@@ -210,7 +236,10 @@ module.exports.function = function updateFight (quiz, answer, $vivContext) {
     //console.log("log: speechOutput: ", speechOutput);
     quiz.questions[j].text = speechOutput;
 
-    //console.log("log: quiz: ", quiz);
+    console.log("log: quiz: yyy: ", quiz);
+
+
+
 
   } else if (quiz.state == "ATTACK") {
 
@@ -238,7 +267,7 @@ module.exports.function = function updateFight (quiz, answer, $vivContext) {
     //var computerPoints = computerPoints;
 
     // randomised the situation where the computer gets hit and loses points based on the computerCounterResponseArray
-    console.log("xxx");
+
     if (index == 0 || index == 4 || index == 5 || index == 6 || index == 7 || index == 8)  {
       console.log("yyy");
       console.log("log: computerPoints: ", quiz.computerPoints);
@@ -247,9 +276,8 @@ module.exports.function = function updateFight (quiz, answer, $vivContext) {
       bixbyResponse = bixbyResponse + opponentName + "'s" + " health is " + quiz.computerPoints + "...";
       // win for player
       if (quiz.computerPoints < 10) {
-        console.log("zzz: ", level);
+        console.log("log: current level: ", level);
         bixbyResponse = bixbyResponse  + "Congratulations, you are victorious!  your opponent is down and out...";
-        
         if (level == "BEGINNER") {
           bixbyResponse = bixbyResponse + "You are now an amateur...";
           level = "AMATEUR";
@@ -269,17 +297,27 @@ module.exports.function = function updateFight (quiz, answer, $vivContext) {
         bixbyResponse = bixbyResponse + "Do you want to play again?"
         quiz.questions[j].text = bixbyResponse;
         quiz.state = "END";
+        // update level
+        quiz.level = level;
+        console.log("log: quiz.level: ", quiz.level);
+        quiz.newGame = true;
 
+        var remoteParameters = remoteDB.getUserData(bixbyUserId);
+        console.log("log: remoteParameters: ", remoteParameters);
+        var dbUserId = remoteParameters.dbUserId;
+        console.log("log: dbUserId: ", dbUserId);
+    
+        quiz.questions[0].options[0].text = "Yes";
+        quiz.questions[0].options[1].text = "No";
+        quiz.questions[0].options[2].text = "Quit";
 
-          quiz.level = level;
-          console.log("log: quiz.level: ", quiz.level);
-          console.log("log: remoteDB.putUserData");
-          // updates user data entry in remote DB
-          //remoteDB.putUserData(bixbyUserId, quiz)
-          //quiz.completed = true;
-          quiz.newGame = true;
-
-
+        var opponentDB = [];
+        opponentDB.push(quiz);
+        opponentDB.dbUserId = dbUserId;
+        console.log("log: quiz: zzz: ", opponentDB);
+        console.log("log: opponentDB.dbUserId: ", opponentDB.dbUserId);
+        remoteParameters[0].level = level;
+        var putData = remoteDB.putUserData(bixbyUserId, remoteParameters);
 
       } else {
         bixbyResponse = bixbyResponse + commentaryFunctions.attackCommentArray[helperFunctions.randomIntFromInterval(0, commentaryFunctions.attackCommentArray.length-1)];

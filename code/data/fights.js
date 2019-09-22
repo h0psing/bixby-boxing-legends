@@ -2,6 +2,7 @@ module.exports = [
   // Start of funny quiz
   {
     title: "Contender",
+    //dbUserId: "NAB",
     tags: ["new", "contender"], //used to find this quiz
     image: {
       url: "/images/Animals.jpeg",
